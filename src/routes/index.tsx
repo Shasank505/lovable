@@ -1,12 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ChapterWriter, type ChapterDraft } from "@/components/ChapterWriter";
 import { Button } from "@/components/ui/button";
 import birthdayGift from "@/assets/IMG_20260926_085225_036.jpg";
 import firstMeeting from "@/assets/IMG_20260926_084904_786.jpg";
 import firstParty from "@/assets/Screenshot_20260926-091200_Instagram-2.jpg";
 import culturalFest from "@/assets/Screenshot_20260926-091221_Instagram-2.jpg";
 import movieDate from "@/assets/Screenshot_20260926-091234_Instagram-2.jpg";
+import year2Photo1 from "@/assets/chapter2/IMG-20240124-WA0016.jpg";
+import year2Photo2 from "@/assets/chapter2/IMG_20260926_085558_325.jpg";
+import year2Photo3 from "@/assets/chapter2/IMG-20240619-WA0050.jpg";
+import year2Video from "@/assets/chapter2/VID-20240219-WA0004.mp4";
+import year2SweetMoment from "@/assets/chapter2/IMG_20260926_085328_177.jpg";
+import year3Photo1 from "@/assets/chapter3/IMG_20260926_090413_730.jpg";
+import year3Photo2 from "@/assets/chapter3/IMG_20260926_084941_357.jpg";
+import year3Photo3 from "@/assets/chapter3/IMG-20250202-WA0028.jpg";
+import year3Photo4 from "@/assets/chapter3/WA_1790399150100.jpg";
+import year3SweetMoment from "@/assets/chapter3/VID_20260926_035455_3472.mp4";
+import year4Photo1 from "@/assets/chapter4/da5e5ca5-6270-4885-999c-96b477bd6029.jpg";
+import year4Photo2 from "@/assets/chapter4/IMG-20260730-WA0017.jpg";
+import year4Photo3 from "@/assets/chapter4/VID-20260712-WA00262.mp4";
+import year4Photo4 from "@/assets/chapter4/IMG-20260808-WA0138.jpg";
+import year4SweetMoment from "@/assets/chapter4/Photo from Shashank Pandey.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -46,26 +60,35 @@ const CHAPTERS = [
   },
   {
     no: "Two", year: "Year 2", title: "Learning Each Other",
-    story: "Late-night talks, silly fights, making up with ice cream. We learned each other's quiet languages.",
-    photos: ["", "", "", ""],
-    descriptions: ["Text", "Text", "Text", "Text"],
-    highlight: { src: "", caption: "our favourite day", description: "Text" },
+    story: "Late-night talks, silly fights, making up with Kissi. We learned each other's quiet languages.",
+    photos: [year2Photo1, year2Photo2, year2Photo3, year2Video],
+    descriptions: ["Iss din tu vrindavan se aayi thi aur thodi sad thi health ke wajah se tab tu sidha mele godi me aagai thi reading room me", 
+      "Ham canteen me lunch karne aate the saath me, mai har waqt tere saath rukta tha college ki bus jaane tak usme ham ye sab filter wali masti karte the. Btw Looking bridesmaid😚😚"
+      , "Tune first time mera birthday manaya the and pehli baar rose dia the, tu bohot sweet thi uss time"
+      , "Ham college me kaafi popular hogaye the and haa ye video dharmik ne banaya tha"],
+    highlight: { src: year2SweetMoment, caption: "our sweet moment", description: "Ye to sabse jyda accha and hamesha story moment wala picu hai, uss time gulab pe gulab lag rahi thi gulab jamun❤️❤️" },
     question: "Which little habit of mine secretly makes you smile?",
   },
   {
     no: "Three", year: "Year 3", title: "Growing Together",
     story: "New places, new dreams, the same hand to hold. Somewhere along the way, you became home.",
-    photos: ["", "", "", ""],
-    descriptions: ["Text", "Text", "Text", "Text"],
-    highlight: { src: "", caption: "you, laughing", description: "Text" },
+    photos: [year3Photo1, year3Photo2, year3Photo3, year3Photo4],
+    descriptions: ["Hamne kamati bag explore kia tha, zoo me tere and mere jaise swan dekhe the fir toy train bhi ghume the, one of the lovely day spended with you 😘😘",
+       "On of the favorite pic of mine😜😜",
+        "Meri internship ke just one day pehle ham mile the aur tu mujhe aise dekh ke bohot hasi thi😊",
+         "Jab mera confirmation hua tha promact me ,tune mujhe bohot help ki thi hamesha motivate karti thi tab maine tere liye sunflower laaya tha tu bohot khush hogai thi"],
+    highlight: { src: year3SweetMoment, caption: "you, laughing", description: "Garba-- Tu chaudwi ka chaand jaisi aati thi mere saath garba karti thi fir tension me chali jaati thi but hamesha cute lagti thi😘😘" },
     question: "Where in the world would you run away with me tomorrow?",
   },
   {
     no: "Four", year: "Year 4", title: "Still Falling",
     story: "Four years in and I still look at you like the first day. Every chapter with you is my favourite one.",
-    photos: ["", "", "", ""],
-    descriptions: ["Text", "Text", "Text", "Text"],
-    highlight: { src: "", caption: "today & always", description: "Text" },
+    photos: [year4Photo1, year4Photo2, year4Photo3, year4Photo4],
+    descriptions: ["Har jagah baarish hogai thi fir bhi didi ka wish tune poori kia aur itne aache se hamne lambe time tak garba khelu😍", 
+      "This day, maine bhagwan ko yaad kia tha piche baith ke 😜(Bohot acchi gaadi chalayi bubu)",
+       "Again one of the happy moment, bohot enjoy kia tha hamne bohot saare games khele the (BTW abhi bhi credits baaki hai to kab chalna hai ?😉)", 
+       "Bohot Acchu Gana gaya tha aapne and it was a beautiful trip"],
+    highlight: { src: year4SweetMoment, caption: "today & always", description: "Thank You , Har time mere saath rehne ke liye mujhe dengue se bahar nikal ne ke liye and LOVE YOU❤️❤️" },
     question: "What's one dream you want us to chase next?",
   },
 ];
@@ -140,6 +163,11 @@ function Petals() {
 function MusicToggle() {
   const audio = useRef<HTMLAudioElement>(null);
   const [on, setOn] = useState(false);
+  useEffect(() => {
+    const player = audio.current;
+    if (!player) return;
+    player.play().then(() => setOn(true)).catch(() => {});
+  }, []);
   const toggle = () => {
     if (!audio.current || !MUSIC_URL) return setOn((v) => !v);
     if (on) audio.current.pause(); else audio.current.play().catch(() => {});
@@ -147,7 +175,7 @@ function MusicToggle() {
   };
   return (
     <>
-      {MUSIC_URL && <audio ref={audio} src={MUSIC_URL} loop />}
+      {MUSIC_URL && <audio ref={audio} src={MUSIC_URL} autoPlay loop />}
       <button onClick={toggle} aria-label="Toggle music"
         className="fixed right-4 top-4 z-40 flex items-center gap-1.5 rounded-full bg-card/70 px-3 py-2 text-[11px] font-medium text-foreground ring-1 ring-border backdrop-blur-md">
         <span className="text-sm leading-none text-primary">{on ? "♫" : "♪"}</span> {on ? "Playing" : "Music off"}
@@ -175,23 +203,7 @@ function Envelope({ question }: { question: string }) {
 
 function Chapter({ c: base, idx, onContinue, kissing }: { c: (typeof CHAPTERS)[number]; idx: number; onContinue: () => void; kissing: boolean }) {
   const rot = ["-rotate-2", "rotate-2 mt-4", "rotate-1", "-rotate-1 mt-4"];
-  const key = `chapter-draft-${idx}`;
-  const [draft, setDraft] = useState<ChapterDraft | null>(null);
-  const [writing, setWriting] = useState(false);
-  useEffect(() => {
-    try { const s = localStorage.getItem(key); if (s) setDraft(JSON.parse(s)); } catch {}
-  }, [key]);
-  const save = (d: ChapterDraft) => {
-    setDraft(d); setWriting(false);
-    try { localStorage.setItem(key, JSON.stringify(d)); } catch { alert("Saved for now, but the photos are too large to keep after a refresh."); }
-  };
-  const c = draft
-    ? {
-        ...base, title: draft.title || base.title, story: draft.story || base.story, question: draft.question || base.question,
-         highlight: { ...base.highlight, src: draft.photos[0] ?? base.highlight.src, caption: draft.caption || base.highlight.caption },
-        photos: base.photos.map((p, i) => draft.photos[i + 1] ?? p),
-      }
-    : base;
+  const c = base;
   return (
     <section id={`chapter-${idx + 1}`} className="relative border-t border-border px-6 py-16">
       <Reveal>
@@ -201,12 +213,7 @@ function Chapter({ c: base, idx, onContinue, kissing }: { c: (typeof CHAPTERS)[n
         </div>
         <h2 className="mt-3 text-balance font-script text-[42px] font-semibold italic leading-none">{c.title}</h2>
         <p className="mt-4 text-pretty font-script text-xl italic leading-snug opacity-85">{c.story}</p>
-        <button onClick={() => setWriting(true)}
-          className="mt-4 rounded-full px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary ring-1 ring-border">
-          ✦ {draft ? "Rewrite" : "Write"} this year with AI
-        </button>
       </Reveal>
-      {writing && <ChapterWriter year={c.year} names={NAMES} onSave={save} onClose={() => setWriting(false)} />}
 
       <div className="mt-8 grid grid-cols-2 gap-5">
         {c.photos.map((src, i) => (
@@ -230,7 +237,7 @@ function Chapter({ c: base, idx, onContinue, kissing }: { c: (typeof CHAPTERS)[n
            <span className="font-hand text-3xl text-primary">A kiss for you</span>
          </div>}
          <Button type="button" onClick={onContinue} disabled={kissing} className="rounded-full px-7 py-6 text-sm shadow-photo">
-           {idx === CHAPTERS.length - 1 ? "A kiss, then our forever ♥" : `A kiss, then ${CHAPTERS[idx + 1].year} ♥`}
+           {idx === CHAPTERS.length - 1 ? "A kiss, then our forever ♥" : `A kiss, then ${CHAPTERS[idx + 1]?.year ?? "the next chapter"} ♥`}
          </Button>
        </div>
     </section>
@@ -273,7 +280,7 @@ function Finale() {
             style={{ ["--x" as string]: `${b.x}px`, ["--y" as string]: `${b.y}px`, animationDelay: `${b.d}s` }}>{b.c}</span>
         ))}
         {revealed ? (
-          <p className="animate-scale-in font-hand text-5xl text-primary">Happy Anniversary</p>
+          <p className="animate-scale-in font-hand text-5xl text-primary">Candle Light Dinner and tofu😍😍 Yayyyy!!!</p>
         ) : (
           <button onClick={celebrate} className="rounded-full bg-primary px-7 py-3 text-sm font-medium tracking-wide text-primary-foreground shadow-photo">
             Open your surprise ♥
@@ -288,11 +295,15 @@ function Finale() {
 }
 
 function Index() {
-  const [openChapters, setOpenChapters] = useState(1);
+  const [openChapters, setOpenChapters] = useState(0);
   const [kissingChapter, setKissingChapter] = useState<number | null>(null);
   const [showFinale, setShowFinale] = useState(false);
   const kissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (kissTimer.current) clearTimeout(kissTimer.current); }, []);
+  const beginStory = () => {
+    setOpenChapters(1);
+    requestAnimationFrame(() => document.getElementById("chapter-1")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  };
   const continueStory = (idx: number) => {
     if (kissingChapter !== null) return;
     setKissingChapter(idx);
@@ -322,9 +333,9 @@ function Index() {
             <p className="mx-auto mt-6 max-w-[26ch] text-pretty text-[13px] leading-relaxed text-muted-foreground">
               Every page is a year. Every photo, a heartbeat. Turn slowly, my love.
             </p>
-            <a href="#chapter-1" className="mt-9 inline-block rounded-full bg-primary px-7 py-3 text-sm font-medium tracking-wide text-primary-foreground shadow-photo">
+            <button type="button" onClick={beginStory} className="mt-9 rounded-full bg-primary px-7 py-3 text-sm font-medium tracking-wide text-primary-foreground shadow-photo">
               Begin Our Story
-            </a>
+            </button>
           </Reveal>
         </section>
          {CHAPTERS.slice(0, openChapters).map((c, i) => <Chapter key={i} c={c} idx={i} onContinue={() => continueStory(i)} kissing={kissingChapter === i} />)}

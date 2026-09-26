@@ -10,43 +10,33 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiWriteChapterRouteImport } from './routes/api/write-chapter'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiWriteChapterRoute = ApiWriteChapterRouteImport.update({
-  id: '/api/write-chapter',
-  path: '/api/write-chapter',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/write-chapter': typeof ApiWriteChapterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/write-chapter': typeof ApiWriteChapterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/api/write-chapter': typeof ApiWriteChapterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/write-chapter'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/write-chapter'
-  id: '__root__' | '/' | '/api/write-chapter'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiWriteChapterRoute: typeof ApiWriteChapterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,19 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/write-chapter': {
-      id: '/api/write-chapter'
-      path: '/api/write-chapter'
-      fullPath: '/api/write-chapter'
-      preLoaderRoute: typeof ApiWriteChapterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiWriteChapterRoute: ApiWriteChapterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
