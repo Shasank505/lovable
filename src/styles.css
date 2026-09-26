@@ -1,0 +1,116 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-blush: var(--blush);
+  --color-petal: var(--petal);
+  --color-photo: var(--photo);
+  --font-script: "Cormorant Garamond", serif;
+  --font-hand: "Parisienne", cursive;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.955 0.025 355);
+  --foreground: oklch(0.32 0.05 350);
+  --card: oklch(0.985 0.012 355);
+  --card-foreground: oklch(0.32 0.05 350);
+  --primary: oklch(0.62 0.13 358);
+  --primary-foreground: oklch(0.985 0.01 355);
+  --secondary: oklch(0.92 0.04 355);
+  --secondary-foreground: oklch(0.32 0.05 350);
+  --muted: oklch(0.93 0.03 355);
+  --muted-foreground: oklch(0.55 0.05 355);
+  --accent: oklch(0.72 0.11 5);
+  --accent-foreground: oklch(0.99 0 0);
+  --border: oklch(0.87 0.045 355);
+  --input: oklch(0.87 0.045 355);
+  --ring: oklch(0.62 0.13 358);
+  --blush: oklch(0.91 0.05 355);
+  --petal: oklch(0.8 0.1 5);
+  --photo: oklch(0.99 0.004 355);
+  --shadow-photo: 0 12px 28px -14px oklch(0.4 0.08 355 / 0.5);
+  --gradient-page: radial-gradient(circle at 15% 10%, oklch(0.985 0.015 355), transparent 50%),
+    radial-gradient(circle at 90% 85%, oklch(0.9 0.06 5 / 0.6), transparent 45%),
+    var(--background);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--gradient-page);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+@utility shadow-photo { box-shadow: var(--shadow-photo); }
+@utility tape {
+  position: absolute; top: -0.5rem; left: 50%; width: 3.5rem; height: 1rem;
+  translate: -50% 0; border-radius: 2px;
+  background: color-mix(in oklab, var(--petal) 45%, transparent);
+}
+
+@keyframes drift {
+  0% { transform: translateY(-5vh) rotate(0); opacity: 0; }
+  10% { opacity: .7; }
+  100% { transform: translateY(105vh) rotate(260deg); opacity: 0; }
+}
+@keyframes sparkle { 0%,100% { opacity: .2; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.2); } }
+@keyframes burst {
+  0% { transform: translate(0,0) scale(.4); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) scale(1); opacity: 0; }
+}
+.petal {
+  position: absolute; top: 0; width: 10px; height: 10px;
+  border-radius: 9999px 9999px 9999px 0; background: var(--petal);
+  animation: drift linear infinite;
+}
+.sparkle { animation: sparkle 2.4s ease-in-out infinite; }
+.burst { animation: burst 1.6s ease-out forwards; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s cubic-bezier(.32,.72,0,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+.flip-scene { perspective: 900px; }
+.flip-inner { transform-style: preserve-3d; transition: transform .65s ease; }
+.flip-inner.is-flipped { transform: rotateY(180deg); }
+.flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-back { transform: rotateY(180deg); }
+
+@keyframes kiss-pop {
+  0% { opacity: 0; transform: translateY(18px) scale(.5) rotate(-16deg); }
+  30% { opacity: 1; transform: translateY(-10px) scale(1.18) rotate(8deg); }
+  65% { opacity: 1; transform: translateY(-24px) scale(1) rotate(0); }
+  100% { opacity: 0; transform: translateY(-40px) scale(.9); }
+}
+.kiss-pop { animation: kiss-pop 1.4s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transition: none; }
+  .kiss-pop { animation: none; }
+}
